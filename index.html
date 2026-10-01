@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة التحدي والمعرفة الشاملة</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',
+                            card: '#1e293b',
+                            accent: '#6366f1',
+                            hover: '#4f46e5',
+                            success: '#10b981',
+                            warning: '#f59e0b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0b0f19;
+            color: #f8fafc;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-[#0b0f19] min-h-screen text-slate-100 flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+
+    <header class="glass-panel sticky top-0 z-40 border-b border-slate-800 px-4 py-3 shadow-lg">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <button id="sidebarToggle" class="p-2.5 rounded-xl bg-slate-800 text-indigo-400 hover:bg-slate-700 transition shadow-md md:hidden">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                        <i class="fa-solid fa-brain text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-black text-lg md:text-xl bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400 bg-clip-text text-transparent">
+                            منصة التحدي والمعرفة الشاملة
+                        </h1>
+                        <p class="text-xs text-slate-400">واجهة منظمة وثابتة مع بنك أسئلة دقيق</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <div class="hidden sm:flex items-center gap-2 bg-slate-800/90 border border-slate-700 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-300">
+                    <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                    <span>النظام: مستقر ومنظم</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto w-full flex-grow flex flex-col md:flex-row gap-6 p-4 md:p-6">
+        
+        <!-- Sidebar Navigation Drawer -->
+        <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-72 bg-[#111827] border-l border-slate-800 p-5 transform translate-x-full md:translate-x-0 md:static md:w-64 md:rounded-2xl md:border transition-transform duration-300 flex flex-col justify-between shadow-2xl md:shadow-none">
+            <div>
+                <div class="flex justify-between items-center mb-6 md:hidden">
+                    <span class="font-bold text-slate-200">القائمة الرئيسية</span>
+                    <button id="sidebarClose" class="p-2 text-slate-400 hover:text-white">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <div class="space-y-2">
+                    <a href="#" onclick="showHome()" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-indigo-600 text-white font-bold shadow-lg shadow-indigo-600/30 transition">
+                        <i class="fa-solid fa-house w-5 text-center"></i>
+                        <span>الرئيسية</span>
+                    </a>
+                    <button onclick="openUpdatesModal()" class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-slate-800/60 hover:bg-slate-800 text-slate-300 hover:text-white font-medium transition border border-slate-700/50">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-bell text-indigo-400 w-5 text-center"></i>
+                            <span>التحديثات</span>
+                        </div>
+                        <span class="text-xs bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded-md">سجل</span>
+                    </button>
+                    <button onclick="openNewFeatureModal()" class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-slate-800/60 hover:bg-slate-800 text-slate-300 hover:text-white font-medium transition border border-slate-700/50">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-sparkles text-amber-400 w-5 text-center"></i>
+                            <span>جديد</span>
+                        </div>
+                        <span id="newBadgeSidebar" class="text-[10px] bg-red-500 text-white font-bold px-1.5 py-0.5 rounded-full animate-bounce">جديد</span>
+                    </button>
+                </div>
+
+                <hr class="border-slate-800 my-6">
+
+                <div class="space-y-1">
+                    <span class="text-xs font-semibold text-slate-400 px-3 uppercase tracking-wider">الفئات الرئيسية</span>
+                    <div id="sidebarCategories" class="mt-2 space-y-1 text-sm text-slate-300">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gradient-to-b from-indigo-950/40 to-slate-900 border border-indigo-500/20 text-center">
+                <i class="fa-solid fa-award text-amber-400 text-2xl mb-2"></i>
+                <h4 class="text-xs font-bold text-white">اختبارات معيارية دقيقة</h4>
+                <p class="text-[11px] text-slate-400 mt-1">10 أسئلة مختارة بعناية لكل فرع</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-grow flex flex-col">
+            
+            <!-- Home View -->
+            <div id="homeView" class="space-y-6">
+                <!-- Instruction Banner -->
+                <div class="glass-panel p-6 md:p-8 rounded-3xl relative overflow-hidden shadow-xl border border-indigo-500/20">
+                    <div class="absolute -left-10 -bottom-10 w-60 h-60 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -right-10 -top-10 w-60 h-60 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+                    
+                    <div class="relative z-10 max-w-3xl">
+                        <h2 class="text-2xl md:text-3xl font-black text-white leading-tight mb-3">
+                            منصة التحدي والمعرفة الشاملة
+                        </h2>
+                        <!-- Required Instruction Text -->
+                        <p class="text-indigo-200 font-bold text-base md:text-lg bg-indigo-950/60 border border-indigo-500/30 p-4 rounded-2xl shadow-inner">
+                            اختر فئتك الرئيسية اضغط على أي مجال لتظهر لك الاختبارات والفروع المتاحه داخله
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Categories Grid -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-indigo-400"></i> الفئات والمجالات الرئيسية
+                    </h3>
+
+                    <div id="categoriesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subcategories View (Hidden by default) -->
+            <div id="subcategoriesView" class="hidden space-y-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <button onclick="showHome()" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <div>
+                            <h3 id="subCategoryMainTitle" class="text-2xl font-black text-white">فروع الفئة</h3>
+                            <p class="text-xs text-slate-400">اختر الفرع المناسب لبدء اختبار الـ 10 أسئلة</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="subcategoriesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+
+            <!-- Quiz Active View (Hidden by default) -->
+            <div id="quizView" class="hidden flex-grow flex flex-col justify-center max-w-3xl mx-auto w-full">
+                <div class="glass-panel p-6 md:p-8 rounded-3xl shadow-2xl border border-slate-800 relative">
+                    
+                    <!-- Quiz Header -->
+                    <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-800">
+                        <div class="flex items-center gap-3">
+                            <button onclick="backToSubcategories()" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                            <div>
+                                <h3 id="quizTitle" class="font-bold text-lg text-white">اسم الفرع</h3>
+                                <p id="quizProgress" class="text-xs text-slate-400">السؤال 1 من 10</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 bg-slate-800/80 px-4 py-2 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-stopwatch text-indigo-400"></i>
+                            <span id="questionTimer" class="font-mono font-bold text-indigo-300">30</span>ث
+                        </div>
+                    </div>
+
+                    <!-- Question Box -->
+                    <div class="mb-8">
+                        <h4 id="questionText" class="text-xl md:text-2xl font-bold text-white leading-relaxed">
+                            نص السؤال هنا...
+                        </h4>
+                    </div>
+
+                    <!-- Options Grid -->
+                    <div id="optionsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+                        <!-- Options generated dynamically -->
+                    </div>
+
+                    <!-- Quiz Footer Control -->
+                    <div class="flex justify-between items-center pt-4 border-t border-slate-800">
+                        <div class="text-sm font-semibold text-slate-400">
+                            النتيجة الحالية: <span id="currentScore" class="text-indigo-400 font-bold">0</span> نقاط
+                        </div>
+                        <button id="nextQuestionBtn" onclick="nextQuestion()" class="hidden px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition shadow-lg shadow-indigo-600/30">
+                            السؤال التالي <i class="fa-solid fa-arrow-left mr-2"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Quiz Result View (Hidden by default) -->
+            <div id="resultView" class="hidden flex-grow flex flex-col justify-center max-w-xl mx-auto w-full text-center">
+                <div class="glass-panel p-8 rounded-3xl shadow-2xl border border-slate-800 space-y-6">
+                    <div class="w-20 h-20 bg-indigo-500/20 text-indigo-400 rounded-3xl mx-auto flex items-center justify-center text-3xl shadow-inner">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-black text-white">أتممت الاختبار بنجاح!</h3>
+                        <p class="text-slate-400 text-sm mt-1">لقد أكملت أسئلة الفرع المعياري.</p>
+                    </div>
+
+                    <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 flex justify-around">
+                        <div>
+                            <span class="block text-xs text-slate-400">النتيجة النهائية</span>
+                            <span id="finalScore" class="text-3xl font-black text-indigo-400">0/100</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-slate-400">الدقة</span>
+                            <span id="finalAccuracy" class="text-3xl font-black text-emerald-400">0%</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button onclick="restartQuiz()" class="flex-1 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition shadow-lg shadow-indigo-600/30">
+                            <i class="fa-solid fa-rotate-right ml-2"></i> إعادة الاختبار
+                        </button>
+                        <button onclick="showHome()" class="flex-1 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold transition border border-slate-700">
+                            <i class="fa-solid fa-house ml-2"></i> الرئيسية
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Updates Modal -->
+    <div id="updatesModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-panel bg-[#111827] max-w-lg w-full rounded-3xl p-6 border border-slate-800 shadow-2xl relative">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
+                <h3 class="font-bold text-lg text-white flex items-center gap-2">
+                    <i class="fa-solid fa-bell text-indigo-400"></i> سجل التحديثات
+                </h3>
+                <button onclick="closeUpdatesModal()" class="text-slate-400 hover:text-white p-2">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="space-y-4 max-h-[60vh] overflow-y-auto pr-2 text-sm text-slate-300">
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="font-bold text-indigo-400">إضافة أقسام الجغرافيا والتاريخ</span>
+                        <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded">محدث</span>
+                    </div>
+                    <p class="text-xs text-slate-400">تم إضافة أقسام الجغرافيا والتاريخ بفروعها المتكاملة وشارات "جديد" المتميزة.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="font-bold text-white">إعادة تنظيم الواجهة والفروع</span>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">مستقر</span>
+                    </div>
+                    <p class="text-xs text-slate-400">تصميم واجهة ثابتة وغير عشوائية مع بنك أسئلة دقيق ومستقر لكل اختبار.</p>
+                </div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-800 text-center">
+                <button onclick="closeUpdatesModal()" class="px-6 py-2 rounded-xl bg-indigo-600 text-white font-bold text-sm w-full">فهمت</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Feature Modal (With 24h Expiry logic) -->
+    <div id="newFeatureModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-panel bg-[#111827] max-w-lg w-full rounded-3xl p-6 border border-slate-800 shadow-2xl relative">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
+                <h3 class="font-bold text-lg text-white flex items-center gap-2">
+                    <i class="fa-solid fa-sparkles text-amber-400"></i> العناصر والإضافات الجديدة
+                </h3>
+                <button onclick="closeNewFeatureModal()" class="text-slate-400 hover:text-white p-2">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="space-y-4 text-center py-4">
+                <div class="w-16 h-16 bg-amber-500/20 text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-2xl shadow-inner">
+                    <i class="fa-solid fa-rocket"></i>
+                </div>
+                <h4 class="text-xl font-bold text-white">أقسام الجغرافيا والتاريخ المحدثة</h4>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    تم إطلاق هذه الإضافات خصيصاً لتوسيع المدارك المعرفية. شارات "جديد" تفقد فعاليتها تلقائياً بعد مرور 24 ساعة من التفعيل.
+                </p>
+                <div class="text-xs text-amber-400/90 font-mono bg-amber-500/10 py-2 rounded-lg border border-amber-500/20">
+                    حالة الشارات: مفعلة ضمن نافذة الـ 24 ساعة
+                </div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-800 text-center">
+                <button onclick="closeNewFeatureModal()" class="px-6 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm w-full">استكشف الجديد</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-xs text-slate-500 border-t border-slate-800/80 mt-12">
+        جميع الحقوق محفوظة © منصة التحدي والمعرفة الشاملة
+    </footer>
+
+    <script>
+        // --- 24-Hour Expiry Logic for "New" Badges ---
+        function checkNewBadgeExpiry() {
+            const now = new Date().getTime();
+            let publishTime = localStorage.getItem('platform_publish_time');
+            if (!publishTime) {
+                publishTime = now;
+                localStorage.setItem('platform_publish_time', publishTime);
+            }
+            const twentyFourHours = 24 * 60 * 60 * 1000;
+            if (now - publishTime > twentyFourHours) {
+                const badge = document.getElementById('newBadgeSidebar');
+                if (badge) badge.style.display = 'none';
+                document.querySelectorAll('.badge-new').forEach(el => el.style.display = 'none');
+            }
+        }
+
+        // --- Structured Categories & Subcategories with Fixed 10-Question Banks ---
+        const categoriesData = [
+            {
+                id: 'sports',
+                name: 'الرياضة',
+                icon: 'fa-futbol',
+                color: 'from-rose-600 to-red-600',
+                isNew: false,
+                subcategories: [
+                    { id: 'football', name: 'كرة قدم', desc: 'أسئلة حول بطولات وأساطير كرة القدم' },
+                    { id: 'basketball', name: 'كرة سلة', desc: 'قوانين ونجوم دوري كرة السلة' },
+                    { id: 'volleyball', name: 'كرة طائرة', desc: 'معلومات عن منافسات الكرة الطائرة' }
+                ]
+            },
+            {
+                id: 'islamic',
+                name: 'الإسلامية',
+                icon: 'fa-mosque',
+                color: 'from-cyan-600 to-blue-600',
+                isNew: false,
+                subcategories: [
+                    { id: 'tawhed', name: 'التوحيد', desc: 'أركان الإيمان والعقيدة الإسلامية' },
+                    { id: 'fiqh', name: 'الفقه', desc: 'الأحكام الشرعية والعبادات' },
+                    { id: 'seerah', name: 'السيرة النبوية', desc: 'محطات من حياة النبي صلى الله عليه وسلم' }
+                ]
+            },
+            {
+                id: 'science',
+                name: 'العلوم',
+                icon: 'fa-flask',
+                color: 'from-purple-600 to-pink-600',
+                isNew: false,
+                subcategories: [
+                    { id: 'space', name: 'الفضاء', desc: 'الكواكب، النجوم، والمجرات' },
+                    { id: 'physics', name: 'الفيزياء', desc: 'القوانين والحركات الطبيعية' },
+                    { id: 'biology', name: 'الأحياء', desc: 'الكائنات الحية ووظائف الأعضاء' }
+                ]
+            },
+            {
+                id: 'math',
+                name: 'الرياضيات',
+                icon: 'fa-calculator',
+                color: 'from-blue-600 to-indigo-600',
+                isNew: false,
+                subcategories: [
+                    { id: 'algebra', name: 'الجبر', desc: 'المعادلات والمتغيرات الرياضية' },
+                    { id: 'geometry', name: 'الهندسة', desc: 'الأشكال والأطوال والمساحات' },
+                    { id: 'fastmath', name: 'الحساب السريع', desc: 'عمليات حسابية ذهنية سريعة' }
+                ]
+            },
+            {
+                id: 'english',
+                name: 'الإنجليزية',
+                icon: 'fa-language',
+                color: 'from-indigo-600 to-violet-600',
+                isNew: false,
+                subcategories: [
+                    { id: 'grammar', name: 'القواعد', desc: 'English Grammar Rules' },
+                    { id: 'vocabulary', name: 'المفردات', desc: 'English Vocabulary Builder' },
+                    { id: 'tenses', name: 'الأزمنة', desc: 'Verb Tenses & Conjugation' }
+                ]
+            },
+            {
+                id: 'general',
+                name: 'أسئلة عامة',
+                icon: 'fa-puzzle-piece',
+                color: 'from-fuchsia-600 to-pink-600',
+                isNew: false,
+                subcategories: [
+                    { id: 'culture', name: 'ثقافة عامة', desc: 'معلومات عامة في شتى المجالات' },
+                    { id: 'variety', name: 'منوعات', desc: 'أسئلة خفيفة ومتنوعة' }
+                ]
+            },
+            {
+                id: 'geography',
+                name: 'الجغرافيا',
+                icon: 'fa-globe-americas',
+                color: 'from-emerald-600 to-teal-600',
+                isNew: true,
+                subcategories: [
+                    { id: 'capitals', name: 'عواصم العالم', desc: 'تعرف على عواصم الدول' },
+                    { id: 'terrain', name: 'التضاريس والمعالم', desc: 'الجبال، الأنهار، والمعالم الطبيعية' },
+                    { id: 'continents', name: 'القارات والمحيطات', desc: 'توزيع اليابسة والماء في الأرض' }
+                ]
+            },
+            {
+                id: 'history',
+                name: 'التاريخ',
+                icon: 'fa-landmark',
+                color: 'from-amber-600 to-orange-600',
+                isNew: true,
+                subcategories: [
+                    { id: 'ancient', name: 'الحضارات القديمة', desc: 'الفراعنة، بلاد الرافدين، والإغريق' },
+                    { id: 'islamichist', name: 'التاريخ الإسلامي', desc: 'الخلافة والدول الإسلامية عبر العصور' },
+                    { id: 'modern', name: 'التاريخ الحديث', desc: 'أهم الأحداث والحروب الحديثة' }
+                ]
+            },
+            {
+                id: 'philosophy',
+                name: 'قريباً: الفلسفة',
+                icon: 'fa-hourglass-half',
+                color: 'from-slate-600 to-slate-800',
+                isSoon: true,
+                timer: '23:59:59'
+            }
+        ];
+
+        // --- Question Bank (10 accurate questions for each subcategory) ---
+        const questionBank = {
+            football: [
+                { text: "من هو أكثر اللاعبين تتويجاً بكرة الحذاء الذهبي التاريخي؟", options: ["ليونيل ميسي", "كريستيانو رونالدو", "بيليه", "مارادونا"], correct: 0 },
+                { text: "في أي دولة أقيمت بطولة كأس العالم عام 2014؟", options: ["البرازيل", "جنوب إفريقيا", "ألمانيا", "روسيا"], correct: 0 },
+                { text: "كم عدد لاعبين فريق كرة القدم الأساسيين على الملعب؟", options: ["9 لاعبين", "10 لاعبين", "11 لاعباً", "12 لاعباً"], correct: 2 },
+                { text: "أي نادي حصد لقب دوري أطول سلسلة انتصارات في أبطال أوروبا؟", options: ["ريال مدريد", "برشلونة", "بايرن ميونخ", "ميلان"], correct: 0 },
+                { text: "من هو المنتخب الفائز بكأس العالم 2022؟", options: ["فرنسا", "الأرجنتين", "البرازيل", "ألمانيا"], correct: 1 },
+                { text: "ما هي مدة الشوط الواحد في مباراة كرة القدم الرسمية؟", options: ["40 دقيقة", "45 دقيقة", "50 دقيقة", "60 دقيقة"], correct: 1 },
+                { text: "ما هو الفريق الذي يُلقب بـ (الشياطين الحمر) في إنجلترا؟", options: ["ليفربول", "مانشستر سيتي", "مانشستر يونايتد", "أرسنال"], correct: 2 },
+                { text: "من هو الهداف التاريخي لكأس العالم للأندية؟", options: ["كريستيانو رونالدو", "ليونيل ميسي", "لويس سواريز", "كريم بنزيما"], correct: 0 },
+                { text: "أي ملعب يُعرف بمسرح الأحلام؟", options: ["كامب نو", "أولد ترافورد", "سانتياغو برنابيو", "أنفيلد"], correct: 1 },
+                { text: "كم عدد مرات فوز البرازيل بكأس العالم؟", options: ["3 مرات", "4 مرات", "5 مرات", "6 مرات"], correct: 2 }
+            ],
+            basketball: [
+                { text: "كم عدد لاعبي فريق كرة السلة داخل الملعب لكل فريق؟", options: ["4 لاعبين", "5 لاعبين", "6 لاعبين", "7 لاعبين"], correct: 1 },
+                { text: "من هو أسطورة نادي شيكاغو بولز في التسعينيات؟", options: ["ليبرون جيمس", "مايكل جوردان", "كوبي براينت", "ستيفن كاري"], correct: 1 },
+                { text: "كم نقطة تُسجل عند التسجيل من خارج القوس (الثلاثية)؟", options: ["نقطة واحدة", "نقطتان", "ثلاث نقاط", "أربع نقاط"], correct: 2 },
+                { text: "ما هي مدة الربع الواحد في دوري المحترفين الأمريكي (NBA)؟", options: ["10 دقائق", "12 دقيقة", "15 دقيقة", "20 دقيقة"], correct: 1 },
+                { text: "أي دولة ابتكرت لعبة كرة السلة؟", options: ["الولايات المتحدة", "إنجلترا", "كندا", "فرنسا"], correct: 0 },
+                { text: "ما هو طول سلة كرة السلة عن الأرض تقريباً؟", options: ["2.5 متر", "3.05 متر", "3.5 متر", "4.0 متر"], correct: 1 },
+                { text: "من هو أكثر اللاعبين تسجيلاً للنقاط في تاريخ الـ NBA؟", options: ["كوبي براينت", "كريم عبد الجبار", "ليبرون جيمس", "مايكل جوردان"], correct: 2 },
+                { text: "ما هي الهيئة الدولية المشرفة على كرة السلة؟", options: ["FIFA", "FIBA", "IOC", "NBA"], correct: 1 },
+                { text: "كم عدد أرباع مباراة كرة السلة؟", options: ["شوطان", "3 أرباع", "4 أرباع", "5 أرباع"], correct: 2 },
+                { text: "ما هي الدولة الأكثر تتويجاً بذهبية السلة الأولمبية؟", options: ["إسبانيا", "الولايات المتحدة", "صربيا", "ليتوانيا"], correct: 1 }
+            ],
+            volleyball: [
+                { text: "كم عدد لاعبين الكرة الطائرة في الملعب للفريق الواحد؟", options: ["5 لاعبين", "6 لاعبين", "7 لاعبين", "8 لاعبين"], correct: 1 },
+                { text: "ما هو اسم اللاعب المخصص للدفاع الخلفي في الطائرة؟", options: ["الليبرو (Libero)", "الكابتن", "المهاجم", "المعد"], correct: 0 },
+                { text: "كم عدد لمسات الكرة المسموحة للفريق الواحد قبل إرسالها للخصم؟", options: ["لمستان", "3 لمسات", "4 لمسات", "غير محدودة"], correct: 1 },
+                { text: "من أي دولة نشأت لعبة الكرة الطائرة؟", options: ["الولايات المتحدة", "البرازيل", "إيطاليا", "روسيا"], correct: 0 },
+                { text: "كم عدد النقاط اللازمة للفوز بشوط عادي في الكرة الطائرة؟", options: ["15 نقطة", "21 نقطة", "25 نقطة", "30 نقطة"], correct: 2 },
+                { text: "ما هو الحد الأقصى لأشواط المباراة؟", options: ["3 أشوط", "4 أشواط", "5 أشواط", "6 أشواط"], correct: 2 },
+                { text: "هل مسموح لمس الشبكة أثناء اللعب؟", options: ["نعم دائماً", "لا، يعتبر خطأ", "فقط عند الإرسال", "مسموح للمدافع فقط"], correct: 1 },
+                { text: "ما هو ارتفاع الشبكة للرجال في الكرة الطائرة؟", options: ["2.24 متر", "2.43 متر", "2.55 متر", "2.10 متر"], correct: 1 },
+                { text: "متى أُدرجت الكرة الطائرة رسمياً في الأولمبياد؟", options: ["1954", "1964", "1974", "1984"], correct: 1 },
+                { text: "أي دولة حصدت ذهبية طائرة الرجال في أولمبياد طوكيو 2020؟", options: ["فرنسا", "روسيا", "البرازيل", "الولايات المتحدة"], correct: 0 }
+            ],
+            tawhed: [
+                { text: "ما هو تعريف التوحيد اصطلاحاً؟", options: ["إفراد الله سبحانه وتعالى بالعبادة", "الإقرار بوجود خالق فقط", "الاعتقاد بتعدد الآلهة", "العمل الصالح المجرد"], correct: 0 },
+                { text: "كم أقسام التوحيد عند أهل السنة والجماعة؟", options: ["قسمان", "ثلاثة أقسام", "أربعة أقسام", "خمسة أقسام"], correct: 1 },
+                { text: "ما هو توحيد الربوبية؟", options: ["إفراد الله بأفعاله كالخلق والرزق", "إفراد الله بالعبادة والدعاء", "إيمان بأسماء الله الحسنى", "طاعة الرسول صلى الله عليه وسلم"], correct: 0 },
+                { text: "ما هو أعظم الذنب عند الله سبحانه وتعالى؟", options: ["السرقة", "الشرك بالله", "عقوق الوالدين", "شهادة الزور"], correct: 1 },
+                { text: "ما هي أعظم آية في القرآن الكريم؟", options: ["آية الكرسي", "سورة الإخلاص", "خواتيم سورة البقرة", "فاتحة الكتاب"], correct: 0 },
+                { text: "ما هو توحيد الأسماء والصفات؟", options: ["إثبات ما ثبت لله من أسماء وصفات بلا تمثيل", "تأويل الصفات كلها", "إنكار أسماء الله", "تشبيه صفات الله بخلقه"], correct: 0 },
+                { text: "ما هي الكلمة التي تنبني عليها أصول الإيمان والتواحيد؟", options: ["سبحان الله", "لا إله إلا الله", "الحمد لله", "الله أكبر"], correct: 1 },
+                { text: "من أول الرسل إلى أهل الأرض؟", options: ["إبراهيم عليه السلام", "نوح عليه السلام", "آدم عليه السلام", "موسى عليه السلام"], correct: 1 },
+                { text: "ما الغاية من خلق الجن والإنس كما ورد في القرآن؟", options: ["لعمارة الأرض فقط", "للعبادة", "للتنافس والتفاخر", "لجمع المال"], correct: 1 },
+                { text: "ما هو الشرك الأصغر كما يمثله العلماء؟", options: ["الرياء اليسير", "عبادة الأصنام", "إنكار البعث", "الردة الكاملة"], correct: 0 }
+            ],
+            fiqh: [
+                { text: "ما هو الحكم الشرعي لمن ترك صلاة عمداً جاحداً لوجوبها؟", options: ["فاسق", "كافر مرتد عن الإسلام", "تارك لدينه بلا كفر", "تجب عليه التوبة فقط"], correct: 1 },
+                { text: "كم عدد الصلوات المفروضة في اليوم والليلة؟", options: ["3 صلوات", "4 صلوات", "5 صلوات", "6 صلوات"], correct: 2 },
+                { text: "ما هو الركن الأعظم في الإسلام بعد الشهادتين؟", options: ["الصيام", "الزكاة", "الصلاة", "الحج"], correct: 2 },
+                { text: "ما هي المياه الطهور التي يجوز بها الوضوء؟", options: ["الماء النجس", "الماء الباقي على اصل خلقته", "الماء المستعمل في وضوء", "الماء المتغير بنجاسة"], correct: 1 },
+                { text: "في أي سنة فرضت الصلوات الخمس؟", options: ["قبل الهجرة بثلاث سنوات", "في ليلة الإسراء والمعراج", "في السنة الأولى للهجرة", "في السنة الثانية للهجرة"], correct: 1 },
+                { text: "ما هو النصاب المحدد في زكاة الذهب؟", options: ["85 جراماً", "50 جراماً", "100 جرام", "200 جرام"], correct: 0 },
+                { text: "ما حكم صيام شهر رمضان على كل مسلم بالغ عاقل مقيم؟", options: ["سنة مؤكدة", "فرض عين", "مستحب", "مباح"], correct: 1 },
+                { text: "ما هو أول أركان الإسلام؟", options: ["إقام الصلاة", "إيتاء الزكاة", "الشهادتان", "صوم رمضان"], correct: 2 },
+                { text: "ما هي الطهارة الصغرى التي ترفع الحدث الأصغر؟", options: ["الغسل", "الوضوء", "التيمم بالتراب الطاهر", "إزالة النجاسة عن الثوب"], correct: 1 },
+                { text: "ما حكم صلاة الجماعة للرجال في المسجد عند الجمهور؟", options: ["سنة مؤكدة", "واجبة أو فرض كفاية/عين", "مستحبة", "مباحة"], correct: 1 }
+            ],
+            seerah: [
+                { text: "في أي عام ولد النبي محمد صلى الله عليه وسلم؟", options: ["عام الفيل", "سنة البعثة", "سنة الهجرة", "بعد الفيل بعشر سنوات"], correct: 0 },
+                { text: "ما اسم والد النبي صلى الله عليه وسلم؟", options: ["أبو طالب", "عبدالمطلب", "عبدالله", "حمزة"], correct: 2 },
+                { text: "من هي أول أمهات المؤمنين وزوجات النبي صلى الله عليه وسلم؟", options: ["عائشة بنت أبي بكر", "خديجة بنت خويلد", "حفصة بنت عمر", "سودة بنت زمعة"], correct: 1 },
+                { text: "في أي غار كان النبي يتحنث قبل البعثة النبوية؟", options: ["غار ثور", "غار حراء", "جبل أحد", "جبل النور"], correct: 1 },
+                { text: "ما هي المدينة التي هاجر إليها النبي صلى الله عليه وسلم؟", options: ["الطائف", "المدينة المنورة (يثرب)", "القدس", "الشام"], correct: 1 },
+                { text: "كم استمرت الدعوة الإسلامية سرّاً في مكة؟", options: ["سنة واحدة", "ثلاث سنوات", "خمس سنوات", "عشر سنوات"], correct: 1 },
+                { text: "ما اسم ناقة النبي صلى الله عليه وسلم يوم الهجرة؟", options: ["القصواء", "الصحباء", "الجدعاء", "البراق"], correct: 0 },
+                { text: "في أي غزوة استشهد عم النبي حمزة بن عبدالمطلب؟", options: ["غزوة بدر", "غزوة أحد", "غزوة الخندق", "فتح مكة"], correct: 1 },
+                { text: "ما اسم المرضعة الحليمة التي أرضعت النبي في صغره؟", options: ["حليمة السعدية", "ثويبة الأسلمية", "أبو لهب", "أم أيمن"], correct: 0 },
+                { text: "في أي عام توفي النبي صلى الله عليه وسلم؟", options: ["السنة العاشرة للهجرة", "السنة الحادية عشرة للهجرة", "السنة الثانية عشرة للهجرة", "السنة التاسعة للهجرة"], correct: 1 }
+            ],
+            space: [
+                { text: "ما هو أكبر كوكب في المجموعة الشمسية؟", options: ["زحل", "المشتري", "المريخ", "نبتون"], correct: 1 },
+                { text: "ما هو الكوكب المعروف بالكوكب الأحمر؟", options: ["الزهرة", "عطارد", "المريخ", "أورانوس"], correct: 2 },
+                { text: "ما هي المجرة التي تنتمي إليها مجموعة شمسنا؟", options: ["أندروميدا", "درب التبانة (سكة التبانة)", "سحابة ماجلان", "سومبريرو"], correct: 1 },
+                { text: "كم يستغرق ضوء الشمس ليصل إلى الأرض تقريباً؟", options: ["ثانية واحدة", "8 دقائق و 20 ثانية", "ساعة كاملة", "يوم كامل"], correct: 1 },
+                { text: "ما هو أبعد كوكب عن الشمس في مجموعتنا الشمسية؟", options: ["أورانوس", "نبتون", "بلوتو (كوكب قزم)", "زحل"], correct: 1 },
+                { text: "ما هي أضخم نجمة في مجموعتنا الشمسية؟", options: ["الشعرى اليمانية", "الشمس", "النجم القطب", "المنكب الجوزاء"], correct: 1 },
+                { text: "أي كوكب يتميز بحلقات عملاقة وواضحة حوله؟", options: ["المشتري", "زحل", "أورانوس", "المريخ"], correct: 1 },
+                { text: "ما هي أداة الرصد الرئيسية المستخدمة لرؤية النجوم البعيدة؟", options: ["المجهر (الميكروسكوب)", "التلسكوب الفلكي", "المنظار العادي", "جهاز السونار"], correct: 1 },
+                { text: "من هو أول رنسان يدور حول الأرض في الفضاء؟", options: ["نيل أرمسترونغ", "يوري غاغارين", "باز ألدرين", "رائد فضاء عربي"], correct: 1 },
+                { text: "ما هي المادة الأساسية التي تتكون منها الشمس؟", options: ["الهيدروجين والهيليوم", "الأكسجين والنيتروجين", "الحديد والصخور", "الكربون والماء"], correct: 0 }
+            ],
+            physics: [
+                { text: "من هو صاحب قوانين الحركة الشهيرة والجاذبية؟", options: ["ألبرت أينشتاين", "إسحاق نيوتن", "نيكولا تسلا", "غاليليو غاليلي"], correct: 1 },
+                { text: "ما وحدة قياس القوة في النظام الدولي؟", options: ["الجول", "النيوتن", "الواط", "الفولت"], correct: 1 },
+                { text: "ما هي سرعة الضوء تقريباً في الفراغ؟", options: ["300 ألف كم/ثانية", "150 ألف كم/ثانية", "3 آلاف كم/ثانية", "مليون كم/ثانية"], correct: 0 },
+                { text: "ما هو القانون الذي ينص على أن الطاقة لا تفنى ولا تُستحدث؟", options: ["قانون الدفع والزخم", "قانون حفظ الطاقة (الديناميكا الحرارية الأولى)", "قانون أوم", "قانون طلاس"], correct: 1 },
+                { text: "ما هي وحدة قياس التردد؟", options: ["الأمبير", "الهيرتز", "الديسيبل", "الأوم"], correct: 1 },
+                { text: "من وضع نظرية النسبية العامة والخاصة؟", options: ["توماس إديسون", "ألبرت أينشتاين", "ستيفن هوكينغ", "ماري كوري"], correct: 1 },
+                { text: "ما هو جهاز قياس شدة التيار الكهربائي؟", options: ["الفولتميتر", "الأميتر", "الأومميتر", "الباروميتر"], correct: 1 },
+                { text: "ماذا يقيس مقياس (ريختر) في الفيزياء الأرضية؟", options: ["سرعة الرياح", "الضغط الجوي", "الزلازل والهزات الأرضية", "درجة حرارة الماء"], correct: 2 },
+                { text: "ما هي الحالة الفيزيائية للمادة التي لها شكل وحجم ثابتين؟", options: ["الحالة السائلة", "الحالة الصلبة", "الحالة الغازية", "البلازما"], correct: 1 },
+                { text: "ما هو الجسيم دون الذري ذو الشحنة السالبة؟", options: ["البروتون", "النيوترون", "الإلكترون", "البوزيترون"], correct: 2 }
+            ],
+            biology: [
+                { text: "ما هو ووحدة بناء الكائن الحي الأساسية؟", options: ["النسيج", "الخلية", "العضو", "الجهاز"], correct: 1 },
+                { text: "ما هو الجزء المسؤول عن توريث الصفات الوراثية في الخلية؟", options: ["الميتوكوندريا", "DNA (الحمض النووي)", "الريبوسوم", "الغشاء البلازمي"], correct: 1 },
+                { text: "أي عضو في جسم الإنسان يضخ الدم لجميع الأجزاء؟", options: ["الدماغ", "الرئتين", "القلب", "الكبد"], correct: 2 },
+                { text: "ما هو الغاز الذي تمتصه النباتات أثناء عملية البناء الضوئي؟", options: ["الأكسجين", "ثاني أكسيد الكربون", "النيتروجين", "الهيدروجين"], correct: 1 },
+                { text: "كم عدد عظام جسم الإنسان البالغ تقريبا؟", options: ["150 عظمة", "206 عظام", "300 عظمة", "450 عظمة"], correct: 1 },
+                { text: "ما هو أكبر عضو في جسم الإنسان من حيث المساحة الخارجية؟", options: ["الكبد", "الجلد", "الأمعاء الدقيقة", "الرئتان"], correct: 1 },
+                { text: "ما هي فصيلة الدم التي تُعرف بـ (المعطي العام)؟", options: ["O منفی", "AB موجَب", "A موجب", "B سالب"], correct: 0 },
+                { text: "ما اسم الغدة التي تُلقب بـ (سيدة الغدد الصماء)؟", options: ["الغدة الدرقية", "الغدة النخامية", "الغدة الكظرية", "البنكرياس"], correct: 1 },
+                { text: "ما هي عملية تحول البويضة المخصبة إلى كائن حي تدريجياً؟", options: ["الانقسام والتكاثر", "التمثيل الغذائي", "التخمر", "التنفس الخلوي"], correct: 0 },
+                { text: "ما هي خلايا الدم المسؤولة عن محاربة الأمراض والعدوى؟", options: ["خلايا الدم الحمراء", "خلايا الدم البيضاء", "الصفائح الدموية", "بلازما الدم"], correct: 1 }
+            ],
+            algebra: [
+                { text: "ما هو حل المعادلة البسيطة: س + 5 = 12 ؟", options: ["س = 5", "س = 7", "س = 12", "س = 17"], correct: 1 },
+                { text: "ما هي قيمة (س) إذا كان 3س = 21 ؟", options: ["س = 5", "س = 6", "س = 7", "س = 8"], correct: 2 },
+                { text: "ما هو ناتج تحليل المقدار: س² - 9 ؟", options: ["(س - 3)(س + 3)", "(س - 9)(س + 1)", "(س - 3)²", "(س + 3)²"], correct: 0 },
+                { text: "ما هو ميل الخط المستقيم للمعادلة: ص = 2س + 5 ؟", options: ["2", "5", "7", "صريحة"], correct: 0 },
+                { text: "ما هو ناتج حساب: (2³) ؟", options: ["6", "8", "9", "12"], correct: 1 },
+                { text: "إذا كانت س = 4، فما قيمة التعبير: 5س - 3 ؟", options: ["15", "17", "20", "23"], correct: 1 },
+                { text: "ما هو مجموع جذري المعادلة التربيعية البسيطة: س² = 16 ؟", options: ["4 فقط", "-4 فقط", "4 و -4", "صفر"], correct: 2 },
+                { text: "ماذا يُسمى العددان اللذان حاصل ضربهما يساوي 1 ؟", options: ["النظير الجمعي", "النظير الضربي (المقلوب)", "العدد الأولي", "العدد الزوجي"], correct: 1 },
+                { text: "ما ناتج جمع الأُسس عند ضرب أساسين متساويين: سᵃ × سᵇ ؟", options: ["سᵃ⁻ᵇ", "سᵃ⁺ᵇ", "سᵃᵇ", "2سᵃ"], correct: 1 },
+                { text: "ما حل المعادلة التربيعية: س² - 5س + 6 = 0 ؟", options: ["2 و 3", "1 و 6", "-2 و -3", "3 و 4"], correct: 0 }
+            ],
+            geometry: [
+                { text: "ما مجموع قياسات زوايا المثلث الداخلي؟", options: ["90 درجة", "180 درجة", "270 درجة", "360 درجة"], correct: 1 },
+                { text: "ما هو قانون مساحة المستطيل؟", options: ["الطول × العرض", "2 × (الطول + العرض)", "ضلع النفس × نفسه", "نصف القاعدة × الارتفاع"], correct: 0 },
+                { text: "كم ضلعاً لشكل (السداسي المنتظم)؟", options: ["4 أضلاع", "5 أضلاع", "6 أضلاع", "8 أضلاع"], correct: 2 },
+                { text: "ما هي مساحة الدائرة التي نصف قطرها (نق)؟", options: ["2 ط نق", "ط نق²", "قطر الدائرة × ط", "4 ط نق²"], correct: 1 },
+                { text: "ما هو اسم الزاوية التي قياسها أكبر من 90 وأقل من 180 درجة؟", options: ["زاوية حادة", "زاوية قائمة", "زاوية منفرجة", "زاوية مستقيمة"], correct: 2 },
+                { text: "ما قياس الزاوية القائمة؟", options: ["45 درجة", "90 درجة", "180 درجة", "360 درجة"], correct: 1 },
+                { text: "كم عدد أقطار المربع؟", options: ["قطر واحد", "قطران", "3 أقطار", "4 أقطار"], correct: 1 },
+                { text: "ما هو قانون محيط الدائرة؟", options: ["ط نق²", "2 ط نق", "ط × القطر تربيع", "نق / 2"], correct: 1 },
+                { text: "ماذا يسمى المثلث الذي تتساوى أطوال أضلاعه الثلاثة؟", options: ["مختلف الأضلاع", "متساوي الساقين", "متساوي الأطلاع", "قائم الزاوية"], correct: 2 },
+                { text: "ما مجموع قياسات زوايا الشكل الرباعي الداخلية؟", options: ["180 درجة", "270 درجة", "360 درجة", "540 درجة"], correct: 2 }
+            ],
+            fastmath: [
+                { text: "ما هو ناتج: 15 × 4 ؟", options: ["45", "50", "60", "75"], correct: 2 },
+                { text: "ما هو الجذر التربيعي للعدد 144 ؟", options: ["10", "11", "12", "14"], correct: 2 },
+                { text: "ما هو ناتج: 125 ÷ 5 ؟", options: ["20", "25", "30", "35"], correct: 1 },
+                { text: "كم تبلغ نسبة 25% من العدد 200 ؟", options: ["25", "40", "50", "75"], correct: 2 },
+                { text: "ما ناتج: 17 + 28 - 5 ؟", options: ["35", "40", "42", "45"], correct: 1 },
+                { text: "ما هو ناتج ضرب: 9 × 8 ؟", options: ["64", "72", "81", "56"], correct: 1 },
+                { text: "ما هو باقي قسمة 47 على 5 ؟", options: ["0", "1", "2", "4"], correct: 2 },
+                { text: "ما هو ناتج: 11 × 11 ؟", options: ["111", "121", "131", "141"], correct: 1 },
+                { text: "ما هو العدد الذي إذا ضربته في 7 كان الناتج 56 ؟", options: ["6", "7", "8", "9"], correct: 2 },
+                { text: "ما ناتج: 500 - 185 ؟", options: ["315", "325", "385", "415"], correct: 0 }
+            ],
+            grammar: [
+                { text: "Choose the correct option: She _____ to the store yesterday.", options: ["go", "goes", "went", "gone"], correct: 2 },
+                { text: "Which sentence is in the present continuous tense?", options: ["I play football.", "I am playing football.", "I played football.", "I will play football."], correct: 1 },
+                { text: "Choose the correct pronoun: This is my book. Give it to _____.", options: ["he", "she", "me", "they"], correct: 2 },
+                { text: "What is the plural form of the word 'child'?", options: ["childs", "childes", "children", "child"], correct: 2 },
+                { text: "Choose the correct preposition: She is good _____ mathematics.", options: ["at", "in", "on", "with"], correct: 0 },
+                { text: "Which word is an adjective in the sentence: 'The fast car drove by.'", options: ["car", "drove", "fast", "the"], correct: 2 },
+                { text: "Choose the correct form: If I _____ rich, I would travel the world.", options: ["am", "were", "be", "was"], correct: 1 },
+                { text: "Choose the correct article: He wants to buy _____ apple.", options: ["a", "an", "the", "some"], correct: 1 },
+                { text: "What is the past participle of the verb 'eat'?", options: ["ate", "eating", "eaten", "eats"], correct: 2 },
+                { text: "Choose the correct modal verb for ability: 'She _____ swim very fast.'", options: ["can", "should", "must", "might"], correct: 0 }
+            ],
+            vocabulary: [
+                { text: "What is a synonym for the word 'Happy'?", options: ["Sad", "Joyful", "Angry", "Tired"], correct: 1 },
+                { text: "What is the antonym (opposite) of 'Ancient'?", options: ["Old", "Modern", "Historic", "Antique"], correct: 1 },
+                { text: "What does the word 'Brave' mean?", options: ["Scared", "Courageous", "Weak", "Lazy"], correct: 1 },
+                { text: "Which word means 'to study carefully'?", options: ["Ignore", "Examine", "Sleep", "Forget"], correct: 1 },
+                { text: "What is a synonym for 'Difficult'?", options: ["Easy", "Hard", "Simple", "Smooth"], correct: 1 },
+                { text: "What does 'Generous' mean?", options: ["Selfish", "Kind and giving", "Poor", "Greedy"], correct: 1 },
+                { text: "What is the opposite of 'Success'?", options: ["Victory", "Failure", "Win", "Glory"], correct: 1 },
+                { text: "Which word refers to a large body of salt water?", options: ["Mountain", "Desert", "Ocean", "River"], correct: 2 },
+                { text: "What does 'Rapid' mean?", options: ["Slow", "Fast", "Quiet", "Heavy"], correct: 1 },
+                { text: "What is a synonym for 'Silent'?", options: ["Noisy", "Quiet", "Loud", "Active"], correct: 1 }
+            ],
+            tenses: [
+                { text: "Identify the tense: 'They have finished their homework.'", options: ["Present Simple", "Present Perfect", "Past Simple", "Future Simple"], correct: 1 },
+                { text: "Choose the correct past simple form of 'write':", options: ["writed", "wrote", "written", "writing"], correct: 1 },
+                { text: "What is the future simple form of 'I go'?", options: ["I went", "I am going", "I will go", "I have gone"], correct: 2 },
+                { text: "Identify the tense: 'He was reading a book when I entered.'", options: ["Past Continuous", "Past Simple", "Present Continuous", "Past Perfect"], correct: 0 },
+                { text: "Choose the correct verb: 'Water _____ at 100 degrees Celsius.'", options: ["boil", "boils", "boiled", "is boiling"], correct: 1 },
+                { text: "Choose the correct future form: 'Look at those clouds, it _____ rain.'", options: ["is going to", "will", "shall", "might"], correct: 0 },
+                { text: "Identify the tense: 'By next year, I will have graduated.'", options: ["Future Simple", "Future Continuous", "Future Perfect", "Present Perfect"], correct: 2 },
+                { text: "Choose the correct form: 'She usually _____ to work by bus.'", options: ["go", "goes", "is going", "went"], correct: 1 },
+                { text: "What is the past participle of 'be'?", options: ["was", "were", "been", "being"], correct: 2 },
+                { text: "Choose the correct negative past simple form: 'He _____ the match.'", options: ["didn't win", "doesn't win", "won't win", "isn't winning"], correct: 0 }
+            ],
+            culture: [
+                { text: "ما هو العنصر الكيميائي الذي يرمز له بـ (Au)؟", options: ["الحديد", "الفضة", "الذهب", "النحاس"], correct: 2 },
+                { text: "في أي قارة تقع دولة البرازيل؟", options: ["إفريقيا", "أوروبا", "أمريكا الجنوبية", "آسيا"], correct: 2 },
+                { text: "ما هي عاصمة أستراليا الرسمية؟", options: ["سيدني", "ملبورن", "كانبرا", "بريزبان"], correct: 2 },
+                { text: "من هو مؤلف رواية (البؤساء) الشهيرة؟", options: ["فكتور هوغو", "وليام شكسبير", "لبا تولستوي", "تشارلز ديكنز"], correct: 0 },
+                { text: "ما هي اللغة الرسمية في دولة المكسيك؟", options: ["البرتغالية", "الإسبانية", "الإنجليزية", "الفرنسية"], correct: 1 },
+                { text: "كم عدد الساعات في اليوم الكامل؟", options: ["12 ساعة", "20 ساعة", "24 ساعة", "48 ساعة"], correct: 2 },
+                { text: "ما هو الحيوان المعروف بـ (سفينة الصحراء)؟", options: ["الحصان", "الفيل", "الجمل", "الأسد"], correct: 2 },
+                { text: "ما هي عاصمة دولة إيطاليا؟", options: ["ميلانو", "روما", "البندقية", "فلورنسا"], correct: 1 },
+                { text: "من هو مخترع المصباح الكهربائي التجاري؟", options: ["ألبرت أينشتاين", "توماس إديسون", "نيكولا تسلا", "غراهام بيل"], correct: 1 },
+                { text: "ما هي الدولة الأكثر من حيث عدد السكان في العالم؟", options: ["الولايات المتحدة", "الهند", "الصين", "روسيا"], correct: 1 }
+            ],
+            variety: [
+                { text: "ما هو أسرع حيوان بري على وجه الأرض؟", options: ["الأسد", "الفهد (الشيتا)", "الغزال", "الحصان"], correct: 1 },
+                { text: "كم عدد ألوان طيف قزح (المطر) الرئيسية؟", options: ["5 ألوان", "6 ألوان", "7 ألوان", "8 ألوان"], correct: 2 },
+                { text: "ما هو الكوكب الذي يُعرف بتوأم الأرض؟", options: ["المريخ", "الزهرة", "عطارد", "زحل"], correct: 1 },
+                { text: "ما هو الطائر الوحيد القادر على الطيران للوراء؟", options: ["النسور", "البطريق", "الطنان (الهمنغبيرد)", "الغراب"], correct: 2 },
+                { text: "أي معدن سائل في درجة حرارة الغرفة؟", options: ["الحديد", "الزئبق", "الذهب", "النحاس"], correct: 1 },
+                { text: "ما هي عاصمة جمهورية مصر العربية؟", options: ["الإسكندرية", "القاهرة", "الجيزة", "الأقصر"], correct: 1 },
+                { text: "كم عدد أضلاع المثلث؟", options: ["3 أضلاع", "4 أضلاع", "5 أضلاع", "6 أضلاع"], correct: 0 },
+                { text: "ما هو أكبر محيط في العالم؟", options: ["المحيط الأطلسي", "المحيط الهندي", "المحيط الهادي", "المحيط المتجمد الشمالي"], correct: 2 },
+                { text: "ما هي عاصمة دولة فرنسا؟", options: ["ليون", "باريس", "مارسيليا", "نيس"], correct: 1 },
+                { text: "من هو مكتشف قانون الجاذبية الأرضية؟", options: ["نيوتن", "أينشتاين", "أرخميدس", "غاليليو"], correct: 0 }
+            ],
+            capitals: [
+                { text: "ما هي عاصمة دولة اليابان؟", options: ["كيوتو", "أوساكا", "طوكيو", "هيروشيما"], correct: 2 },
+                { text: "ما هي عاصمة دولة ألمانيا؟", options: ["ميونخ", "برلين", "فرانكفورت", "هامبورغ"], correct: 1 },
+                { text: "ما هي عاصمة دولة كندا؟", options: ["تورونتو", "فانكوفر", "أوتاوا", "مونتريال"], correct: 2 },
+                { text: "ما هي عاصمة دولة أستراليا؟", options: ["سيدني", "كانبرا", "ملبورن", "بريزبان"], correct: 1 },
+                { text: "ما هي عاصمة دولة روسيا؟", options: ["سان بطرسبرغ", "موسكو", "كازان", "سيبيريا"], correct: 1 },
+                { text: "ما هي عاصمة دولة الصين؟", options: ["شنغهاي", "بكين", "هونغ كونغ", "غوانغجو"], correct: 1 },
+                { text: "ما هي عاصمة دولة إسبانيا؟", options: ["برشلونة", "مدريد", "إشبيلية", "فالنسيا"], correct: 1 },
+                { text: "ما هي عاصمة دولة الأرجنتين؟", options: ["بوينس آيريس", "قرطبة", "روزاريو", "مندوزا"], correct: 0 },
+                { text: "ما هي عاصمة دولة تركيا؟", options: ["إسطنبول", "أنقرة", "إزمير", "أنطاليا"], correct: 1 },
+                { text: "ما هي عاصمة دولة كوريا الجنوبية؟", options: ["بوسان", "سول", "إنتشون", "دايجو"], correct: 1 }
+            ],
+            terrain: [
+                { text: "ما هو أطول نهر في العالم؟", options: ["نهر الأمازون", "نهر النيل", "نهر المسيسيبي", "نهر الفرات"], correct: 1 },
+                { text: "ما أعلى قمة جبلية في العالم؟", options: ["جبل كليمنجارو", "جبل إيفرست", "جبل مونت بلانك", "جبل ألبروس"], correct: 1 },
+                { text: "ما هو أكبر بحر مغلق في العالم؟", options: ["البحر المتوسط", "بحر قزوين", "البحر الأحمر", "البحر الأسود"], correct: 1 },
+                { text: "أين تقع صحراء أتاكاما الجافة؟", options: ["في إفريقيا", "في تشيلي بأمريكا الجنوبية", "في أستراليا", "في آسيا الوسطى"], correct: 1 },
+                { text: "ما اسم أكبر صحراء رملية متصلة في العالم؟", options: ["صحراء السحاب", "الربع الخالي", "الصحراء الكبرى", "صحراء جوبي"], correct: 1 },
+                { text: "ما هو أعمق أخدود أو خندق محيطي في العالم؟", options: ["خندق ماريانا", "خندق بورتوريكو", "خندق جاوا", "خندق تونغا"], correct: 0 },
+                { text: "أي القارات تحوي أكبر غابة مطيرة (الأمازون)؟", options: ["إفريقيا", "أمريكا الجنوبية", "آسيا", "أستراليا"], correct: 1 },
+                { text: "ما هو البحر الذي يفصل بين قارة إفريقيا وقارة أوروبا؟", options: ["البحر الأحمر", "البحر المتوسط", "بحر العرب", "بحر الشمال"], correct: 1 },
+                { text: "ما اسم الشلالات الشهيرة الواقعة على الحدود بين أمريكا وكندا؟", options: ["شلالات إنجل", "شلالات نياغرا", "شلالات فكتوريا", "شلالات إغوازو"], correct: 1 },
+                { text: "ماذا يُسمى المسطح المائي المحاط باليابسة من جميع الجهات؟", options: ["المحيط", "البحر", "البحيرة", "الخليج"], correct: 2 }
+            ],
+            continents: [
+                { text: "كم عدد قارات العالم الرئيسية؟", options: ["5 قارات", "6 قارات", "7 قارات", "8 قارات"], correct: 2 },
+                { text: "ما هي أكبر قارة في العالم من حيث المساحة والسكان؟", options: ["إفريقيا", "آسيا", "أمريكا الشمالية", "أوروبا"], correct: 1 },
+                { text: "ما هي أصغر قارة في العالم مساحة؟", options: ["أوروبا", "أستراليا (أوقيانوسيا)", "القارة القطبية الجنوبية", "أمريكا الجنوبية"], correct: 1 },
+                { text: "أي محيط يعد الأكبر مساحة على وجه الأرض؟", options: ["المحيط الأطلسي", "المحيط الهندي", "المحيط الهادي (الهدئ)", "المحيط المتجمد الشمالي"], correct: 2 },
+                { text: "أين تقع القارة القطبية الجنوبية (أنتركتيكا)؟", options: ["في أقصى الشمال", "في أقصى الجنوب", "عند خط الاستواء", "في غرب المحيط الأطلسي"], correct: 1 },
+                { text: "أي قارة تُلقب بـ (القارة السمراء)؟", options: ["آسيا", "إفريقيا", "أستراليا", "أمريكا الجنوبية"], correct: 1 },
+                { text: "ما هو المحيط الذي يقع بين قارتي أمريكا وأوروبا/إفريقيا؟", options: ["المحيط الهادي", "المحيط الأطلسي", "المحيط الهندي", "المحيط المتجمد الجنوبي"], correct: 1 },
+                { text: "ما هي القارة الخالية تماماً من الدول البشرية المستقرة؟", options: ["أستراليا", "أنتركتيكا (المتحدة الجنوبية)", "أوروبا", "آسيا"], correct: 1 },
+                { text: "كم نسبة مساحة المياه من سطح كوكب الأرض تقريباً؟", options: ["50%", "60%", "71%", "85%"], correct: 2 },
+                { text: "أي قارة تمر عبرها دوائر العرض الكبرى جميعها؟", options: ["آسيا", "إفريقيا", "أمريكا الشمالية", "أوروبا"], correct: 1 }
+            ],
+            ancient: [
+                { text: "في أي دولة قامت حضارة الفراعنة القديمة؟", options: ["العراق", "مصر", "اليونان", "الصين"], correct: 1 },
+                { text: "ما اسم الحضارة التي نشأت بين دجلة والفرات؟", options: ["حضارة الفراعنة", "حضارة بلاد الرافدين (سومر وبابل)", "حضارة المايا", "الحضارة الرومانية"], correct: 1 },
+                { text: "ما هي العجيبة المعمارية الأبرز لحضارة الفراعنة؟", options: ["سور الصين العظيم", "أهرامات الجيزة", "كولوسيوم روما", "تاج محل"], correct: 1 },
+                { text: "أين نشأت حضارة الإغريق (اليونان القديمة)؟", options: ["في شبه جزيرة البلقان", "في أمريكا الوسطى", "في وسط إفريقيا", "في شبه الجزيرة العربية"], correct: 0 },
+                { text: "ما اسم الكتابة التي استخدتمها الحضارة الفرعونية القديمة؟", options: ["الكتابة المسمارية", "الكتابة الهيروغليفية", "الأبجدية الفينيقية", "اللغة اللاتينية"], correct: 1 },
+                { text: "من هو الإمبراطور الذي بنى أجزاء واسعة من سور الصين العظيم؟", options: ["كن شي هوانغ", "كونفوشيوس", "صلاح الدين", "الأسكندر الأكبر"], correct: 0 },
+                { text: "ما هي الحضارة التي اشتهرت ببناء حضارة المايا في أمريكا الوسطى؟", options: ["حضارة المايا والإنكا", "الحضارة الفارسية", "الحضارة البابلية", "الحضارة الفينيقية"], correct: 0 },
+                { text: "أين تقع مدينة بابل التاريخية الشهيرة؟", options: ["في العراق الحالي", "في سوريا الحالي", "في مصر الحالي", "في إيران الحالي"], correct: 0 },
+                { text: "ما هي عاصمة الإمبراطورية الرومانية القديمة؟", options: ["أثينا", "روما", "الإسكندرية", "قرطاج"], correct: 1 },
+                { text: "من هو القائد اليوناني الشهير الذي غزا العالم القديم وصولاً للهند؟", options: ["يوليوس قيصر", "الإسكندر الأكبر (المقدوني)", "ليونيداس", "بروميثيوس"], correct: 1 }
+            ],
+            islamichist: [
+                { text: "من هو أول خلفاء الراشدين رضي الله عنهم؟", options: ["عمر بن الخطاب", "عثمان بن عفان", "أبو بكر الصديق", "علي بن أبي طالب"], correct: 2 },
+                { text: "في عهد أي خليفة تم جمع القرآن الكريم في مصحف واحد؟", options: ["أبو بكر الصديق", "عمر بن الخطاب", "عثمان بن عفان", "علي بن أبي طالب"], correct: 2 },
+                { text: "ما هي الدولة الإسلامية الكبرى التي خلفت الخلفاء الراشدين واتخذت دمشق عاصمة لها؟", options: ["الدولة العباسية", "الدولة الأموية", "الدولة العثمانية", "الدولة الفاطمية"], correct: 1 },
+                { text: "في أي عهد تم بناء مدينة بغداد لتكون عاصمة الخلافة العباسية؟", options: ["أبو جعفر المنصور", "هارون الرشيد", "عمر بن عبد العزيز", "معاوية بن أبي سفيان"], correct: 0 },
+                { text: "من هو القائد الإسلامي الذي حرر القدس في معركة حطين؟", options: ["قطز", "صلاح الدين الأيوبي", "بيبرس", "نور الدين محمود"], correct: 1 },
+                { text: "في أي عام هجري وقع فتح مكة المكرمة؟", options: ["السنة الخامسة للهجرة", "السنة الثامنة للهجرة", "السنة العاشرة للهجرة", "السنة الثانية للهجرة"], correct: 1 },
+                { text: "من هو الخليفة العباسي الذي عُرف عصره بالعصر الذهبي وازدهار العلم؟", options: ["هارون الرشيد", "المأمون", "المهدي", "المعتصم"], correct: 0 },
+                { text: "متى سقطت الخلافة العباسية في بغداد على يد المغول؟", options: ["1099 م", "1258 م", "1453 م", "1516 م"], correct: 1 },
+                { text: "من هو القائد الذي فتح القسطنطينية وأنهى الإمبراطورية البيزنطية؟", options: ["محمد الفاتح", "سليمان القانوني", "بايزيد الأول", "مراد الثاني"], correct: 0 },
+                { text: "ما هي المعركة التي انتصر فيها المسلمون على التتار بقيادة قطز والظاهر بيبرس؟", options: ["معركة القادسية", "معركة عين جالوت", "معركة اليرموك", "معركة بلاط الشهداء"], correct: 1 }
+            ],
+            modern: [
+                { text: "في أي عام اندلعت الحرب العالمية الأولى؟", options: ["1914", "1939", "1945", "1918"], correct: 0 },
+                { text: "متى انتهت الحرب العالمية الثانية؟", options: ["1940", "1942", "1945", "1950"], correct: 2 },
+                { text: "من هو أول إنسان صعد إلى سطح القمر عام 1969؟", options: ["يوري غاغارين", "نيل أرمسترونغ", "باز ألدرين", "جون غلين"], correct: 1 },
+                { text: "ما هي المنظمة الدولية الكبرى التي أُسست بعد الحرب العالمية الثانية للحفاظ على السلام؟", options: ["عصبة الأمم", "منظمة الأمم المتحدة (UN)", "حلف الناتو", "الاتحاد الأوروبي"], correct: 1 },
+                { text: "في أي عام سقط جدار برلين إيذاناً بنهاية الحرب الباردة؟", options: ["1975", "1989", "1991", "1995"], correct: 1 },
+                { text: "من هو الزعيم الذي قاد حركة إنهاء التمييز العنصري في جنوب إفريقيا؟", options: ["مهاتما غاندي", "نيلسون مانديلا", "مارتن لوثر كينغ", "تشي جيفارا"], correct: 1 },
+                { text: "متى تم تأسيس جامعة الدول العربية؟", options: ["1942", "1945", "1948", "1952"], correct: 1 },
+                { text: "ما هو الحدث الذي أدى لدخول الولايات المتحدة الحرب العالمية الثانية عام 1941؟", options: ["غزو بولندا", "هجوم بيرل هاربر", "أزمة الكاريبي", "اغتيال الأرشيدوق"], correct: 1 },
+                { text: "في أي عام انهار الاتحاد السوفيتي رسمياً؟", options: ["1985", "1989", "1991", "1993"], correct: 2 },
+                { text: "ما هو الاختراع التقني الذي أحدث ثورة الاتصالات الكبرى في أواخر القرن العشرين؟", options: ["التلفاز", "الإنترنت والكمبيوتر الشخصي", "السيارة", "المذياع"], correct: 1 }
+            ]
+        };
+
+        // --- Application State Variables ---
+        let selectedCategoryObj = null;
+        let selectedSubcategoryKey = '';
+        let currentQuestionsList = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval = null;
+        let timeLeft = 30;
+
+        // --- UI Rendering Functions ---
+        function renderCategories() {
+            const grid = document.getElementById('categoriesGrid');
+            const sidebarCat = document.getElementById('sidebarCategories');
+            if (!grid || !sidebarCat) return;
+
+            grid.innerHTML = '';
+            sidebarCat.innerHTML = '';
+
+            categoriesData.forEach(cat => {
+                // Card for Main Grid
+                const card = document.createElement('div');
+                card.className = "glass-panel p-5 rounded-2xl hover:border-indigo-500/50 transition cursor-pointer group flex flex-col justify-between shadow-lg relative overflow-hidden";
+                
+                if (cat.isSoon) {
+                    card.onclick = () => alertSoon(cat.name);
+                } else {
+                    card.onclick = () => openCategory(cat.id);
+                }
+
+                let badgeHtml = cat.isNew ? '<span class="absolute top-3 left-3 text-[10px] bg-amber-500 text-slate-950 font-bold px-2 py-0.5 rounded-full badge-new shadow">جديد</span>' : '';
+                if (cat.isSoon) {
+                    badgeHtml = `<span class="absolute top-3 left-3 text-[10px] bg-slate-700 text-amber-300 font-bold px-2 py-0.5 rounded-full font-mono">قريباً (${cat.timer})</span>`;
+                }
+
+                card.innerHTML = `
+                    ${badgeHtml}
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr ${cat.color} flex items-center justify-center text-white text-xl mb-4 shadow-md group-hover:scale-110 transition-transform">
+                            <i class="fa-solid ${cat.icon}"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-white group-hover:text-indigo-400 transition">${cat.name}</h4>
+                        <p class="text-xs text-slate-400 mt-1">${cat.isSoon ? 'يتم تحضير المحتوى قريباً' : (cat.subcategories.length + ' فروع رئيسية متاحة')}</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs text-indigo-400 font-semibold">
+                        <span>${cat.isSoon ? 'قريباً...' : 'استعرض الفروع'}</span>
+                        <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+                    </div>
+                `;
+                grid.appendChild(card);
+
+                // Sidebar Link
+                const link = document.createElement('button');
+                link.className = "w-full text-right px-3 py-2 rounded-lg hover:bg-slate-800/80 text-slate-300 hover:text-white transition flex items-center justify-between text-xs";
+                if (cat.isSoon) {
+                    link.onclick = () => alertSoon(cat.name);
+                } else {
+                    link.onclick = () => openCategory(cat.id);
+                }
+                link.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid ${cat.icon} text-indigo-400 w-4"></i>
+                        <span>${cat.name}</span>
+                    </div>
+                    ${cat.isNew ? '<span class="text-[9px] bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded">جديد</span>' : ''}
+                `;
+                sidebarCat.appendChild(link);
+            });
+        }
+
+        function alertSoon(name) {
+            alert(`قسم "${name}" قيد التجهيز وسيتم إطلاقه قريباً عبر المؤقت اليومي.`);
+        }
+
+        function showHome() {
+            clearInterval(timerInterval);
+            document.getElementById('homeView').classList.remove('hidden');
+            document.getElementById('subcategoriesView').classList.add('hidden');
+            document.getElementById('quizView').classList.add('hidden');
+            document.getElementById('resultView').classList.add('hidden');
+        }
+
+        function openCategory(catId) {
+            const cat = categoriesData.find(c => c.id === catId);
+            if (!cat || !cat.subcategories) return;
+
+            selectedCategoryObj = cat;
+            document.getElementById('subCategoryMainTitle').textContent = `فروع فئة: ${cat.name}`;
+
+            const subGrid = document.getElementById('subcategoriesGrid');
+            subGrid.innerHTML = '';
+
+            cat.subcategories.forEach(sub => {
+                const subCard = document.createElement('div');
+                subCard.className = "glass-panel p-6 rounded-2xl hover:border-indigo-500/50 transition cursor-pointer group flex flex-col justify-between shadow-lg border border-slate-800";
+                subCard.onclick = () => startQuiz(sub.id, sub.name);
+                subCard.innerHTML = `
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-list-check"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-white group-hover:text-indigo-300 transition">${sub.name}</h4>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">${sub.desc}</p>
+                    </div>
+                    <div class="mt-6 pt-3 border-t border-slate-800 flex justify-between items-center text-xs text-indigo-400 font-semibold">
+                        <span>ابدأ اختبار الـ 10 أسئلة</span>
+                        <i class="fa-solid fa-play group-hover:translate-x-[-2px] transition-transform"></i>
+                    </div>
+                `;
+                subGrid.appendChild(subCard);
+            });
+
+            document.getElementById('homeView').classList.add('hidden');
+            document.getElementById('subcategoriesView').classList.remove('hidden');
+        }
+
+        function backToSubcategories() {
+            clearInterval(timerInterval);
+            if (selectedCategoryObj) {
+                openCategory(selectedCategoryObj.id);
+            } else {
+                showHome();
+            }
+        }
+
+        function startQuiz(subKey, subName) {
+            selectedSubcategoryKey = subKey;
+            currentQuestionsList = questionBank[subKey] || [];
+            currentQuestionIndex = 0;
+            score = 0;
+
+            if (currentQuestionsList.length === 0) {
+                alert("عذراً، أسئلة هذا الفرع قيد التحميل.");
+                return;
+            }
+
+            document.getElementById('quizTitle').textContent = subName;
+            document.getElementById('subcategoriesView').classList.add('hidden');
+            document.getElementById('quizView').classList.remove('hidden');
+
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= currentQuestionsList.length) {
+                showResults();
+                return;
+            }
+
+            currentQuestionIndex++;
+            document.getElementById('quizProgress').textContent = `السؤال ${currentQuestionIndex} من ${currentQuestionsList.length}`;
+            document.getElementById('currentScore').textContent = score;
+
+            const q = currentQuestionsList[currentQuestionIndex - 1];
+            document.getElementById('questionText').textContent = q.text;
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "p-4 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-right font-medium text-slate-200 transition flex items-center justify-between group shadow-sm";
+                btn.onclick = () => selectOption(idx, btn, q.correct);
+                btn.innerHTML = `
+                    <span>${opt}</span>
+                    <span class="w-6 h-6 rounded-lg bg-slate-900 text-slate-400 text-xs flex items-center justify-center font-mono group-hover:bg-indigo-600 group-hover:text-white transition">${String.fromCharCode(65 + idx)}</span>
+                `;
+                optionsContainer.appendChild(btn);
+            });
+
+            document.getElementById('nextQuestionBtn').classList.add('hidden');
+            startQuestionTimer();
+        }
+
+        function startQuestionTimer() {
+            clearInterval(timerInterval);
+            timeLeft = 30;
+            const timerEl = document.getElementById('questionTimer');
+            timerEl.textContent = timeLeft;
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerEl.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeout();
+                }
+            }, 1000);
+        }
+
+        function selectOption(selectedIndex, btnElement, correctIndex) {
+            clearInterval(timerInterval);
+            const buttons = document.getElementById('optionsContainer').children;
+            
+            for (let btn of buttons) {
+                btn.disabled = true;
+                btn.classList.add('opacity-80', 'cursor-not-allowed');
+            }
+
+            if (selectedIndex === correctIndex) {
+                btnElement.classList.remove('bg-slate-800', 'border-slate-700');
+                btnElement.classList.add('bg-emerald-600/30', 'border-emerald-500', 'text-emerald-200');
+                score += 10;
+            } else {
+                btnElement.classList.remove('bg-slate-800', 'border-slate-700');
+                btnElement.classList.add('bg-rose-600/30', 'border-rose-500', 'text-rose-200');
+                
+                // Highlight correct
+                buttons[correctIndex].classList.remove('bg-slate-800', 'border-slate-700');
+                buttons[correctIndex].classList.add('bg-emerald-600/30', 'border-emerald-500', 'text-emerald-200');
+            }
+
+            document.getElementById('currentScore').textContent = score;
+            document.getElementById('nextQuestionBtn').classList.remove('hidden');
+        }
+
+        function handleTimeout() {
+            const q = currentQuestionsList[currentQuestionIndex - 1];
+            const buttons = document.getElementById('optionsContainer').children;
+            for (let btn of buttons) {
+                btn.disabled = true;
+            }
+            buttons[q.correct].classList.add('bg-emerald-600/30', 'border-emerald-500', 'text-emerald-200');
+            document.getElementById('nextQuestionBtn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            loadQuestion();
+        }
+
+        function showResults() {
+            clearInterval(timerInterval);
+            document.getElementById('quizView').classList.add('hidden');
+            document.getElementById('resultView').classList.remove('hidden');
+
+            const maxScore = currentQuestionsList.length * 10;
+            document.getElementById('finalScore').textContent = `${score}/${maxScore}`;
+            const accuracy = Math.round((score / maxScore) * 100);
+            document.getElementById('finalAccuracy').textContent = `${accuracy}%`;
+        }
+
+        function restartQuiz() {
+            startQuiz(selectedSubcategoryKey, document.getElementById('quizTitle').textContent);
+        }
+
+        // --- Modal Controls ---
+        function openUpdatesModal() {
+            document.getElementById('updatesModal').classList.remove('hidden');
+        }
+        function closeUpdatesModal() {
+            document.getElementById('updatesModal').classList.add('hidden');
+        }
+        function openNewFeatureModal() {
+            document.getElementById('newFeatureModal').classList.remove('hidden');
+        }
+        function closeNewFeatureModal() {
+            document.getElementById('newFeatureModal').classList.add('hidden');
+        }
+
+        // --- Sidebar Mobile Toggle ---
+        const sidebar = document.getElementById('sidebar');
+        document.getElementById('sidebarToggle').onclick = () => sidebar.classList.remove('translate-x-full');
+        document.getElementById('sidebarClose').onclick = () => sidebar.classList.add('translate-x-full');
+
+        // Initialize on load
+        window.onload = function() {
+            checkNewBadgeExpiry();
+            renderCategories();
+        }
+    </script>
+</body>
+</html>
